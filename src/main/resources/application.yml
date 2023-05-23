@@ -1,0 +1,94 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+      routes:
+        - id: hr
+          uri: lb://HR
+          predicates:
+            - Path=/hr/**
+          filters:
+            - AuthenticationFilter
+
+
+        - id: project
+          uri: lb://PROJECT
+          predicates:
+            - Path=/projets/**
+          filters:
+            - AuthenticationFilter
+
+
+        - id: prospect
+          uri: lb://PROSPECT
+          predicates:
+            - Path=/contact/**
+          filters:
+            - AuthenticationFilter
+
+        - id: stock
+          uri: lb://STOCK
+          predicates:
+            - Path=/stock/**
+          filters:
+            - AuthenticationFilter
+
+
+        - id: vente
+          uri: lb://VENTE
+          predicates:
+            - Path=/vente/**
+          filters:
+            - AuthenticationFilter
+
+        - id: comptabilite
+          uri: lb://COMPTABILITE
+          predicates:
+            - Path=/comptabilite/**
+          filters:
+            - AuthenticationFilter
+
+        - id: book
+          uri: lb://BOOK
+          predicates:
+            - Path=/book/**
+          filters:
+            - AuthenticationFilter
+
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+
+  application:
+    name: APP-GATEWAY
+
+  main:
+    web-application-type: reactive
+
+  profiles:
+    active:
+      - dev
+
+eureka:
+  instance:
+    appname: APP-GATEWAY
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,10 @@
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://discovery.local:8081/eureka"
+
+  instance:
+    hostname: api.v1.local
+    instance_id: APP-GATEWAY:8081
